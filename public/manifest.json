@@ -17,5 +17,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "fullscreen",
+  "pico_xr_button_selector": ".webvr-ui-button"
 }
