@@ -56,6 +56,7 @@ scene.addNode(fileButton);
 
 let upDownButtonTexture = new UrlTexture('media/textures/TB.png');
 const upDownButton = new ButtonNode(upDownButtonTexture, () => {
+    if(!videoElement) return;
     instanceVideo(videoElement.src, "stereoTopBottom");
 });
 upDownButton.scale = [5, 5, 5];
@@ -64,6 +65,7 @@ scene.addNode(upDownButton);
 
 let leftRightButtonTexture = new UrlTexture('media/textures/LR.png');
 const leftRightButton = new ButtonNode(leftRightButtonTexture, () => {
+    if(!videoElement) return;
     instanceVideo(videoElement.src, "stereoLeftRight");
 });
 leftRightButton.scale = [5, 5, 5];
@@ -72,6 +74,7 @@ scene.addNode(leftRightButton);
 
 let MonoButtonTexture = new UrlTexture('media/textures/Mono.png');
 const MonoButton = new ButtonNode(MonoButtonTexture, () => {
+    if(!videoElement) return;
     instanceVideo(videoElement.src, "mono");
 });
 MonoButton.scale = [5, 5, 5];
@@ -82,9 +85,24 @@ scene.addNode(MonoButton);
 
 let videoElement = null;
 let videoNode = null;
-function instanceVideo(videoUrl, mode) {
+function instanceVideo(url, mode) {
+    let videoUrl;
+    if (url && url.startsWith('blob:')) {
+        videoUrl = URL.createObjectURL(fileInput.files[0]);
+    }
+
+    else {
+        var urlObject = new URL(url, window.location.href);
+        urlObject.searchParams.set('t', Date.now());
+        videoUrl = urlObject.toString();
+    }
+    console.log("videoUrl", videoUrl);
+
+    videoElement?.pause();
     videoElement?.remove();
+    videoElement = null;
     scene.removeNode(videoNode);
+    videoNode = null;
 
     videoElement = document.createElement('video');
     videoElement.loop = true;
@@ -118,6 +136,7 @@ function instanceVideo(videoUrl, mode) {
             videoNode.scale = [2.1, 2.1 / aspect, 1.0];
         }
         if (isXrImmersiveMode) {
+            playButton.visible = false;
             videoElement.play();
         }
     });
@@ -162,6 +181,7 @@ function onRequestSession() {
     let pending;
 
     pending = videoElement.play().then(() => {
+        playButton.visible = false;
         videoElement.pause();
     });
 
@@ -173,6 +193,7 @@ function onRequestSession() {
         onSessionStarted(session);
 
         pending.then(() => {
+            playButton.visible = false;
             videoElement.play();
         });
     });
