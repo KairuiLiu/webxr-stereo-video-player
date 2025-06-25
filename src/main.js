@@ -1,10 +1,10 @@
-import { WebXRButton } from './js/util/webxr-button.js';
-import { Scene } from './js/render/scenes/scene.js';
-import { Renderer, createWebGLContext } from './js/render/core/renderer.js';
-import { UrlTexture } from './js/render/core/texture.js';
-import { ButtonNode } from './js/render/nodes/button.js';
-import { VideoNode } from './js/render/nodes/video.js';
-import { InlineViewerHelper } from './js/util/inline-viewer-helper.js';
+import { WebXRButton } from './web-xr/util/webxr-button.js';
+import { Scene } from './web-xr/render/scenes/scene.js';
+import { Renderer, createWebGLContext } from './web-xr/render/core/renderer.js';
+import { UrlTexture } from './web-xr/render/core/texture.js';
+import { ButtonNode } from './web-xr/render/nodes/button.js';
+import { VideoNode } from './web-xr/render/nodes/video.js';
+import { InlineViewerHelper } from './web-xr/util/inline-viewer-helper.js';
 
 // XR globals.
 let xrButton = null;
@@ -21,9 +21,9 @@ scene.enableStats(false);
 let playTexture = new UrlTexture('media/textures/play-button.png');
 
 let playButton = new ButtonNode(playTexture, () => {
-    if (video.paused) {
+    if (videoElement.paused) {
         playButton.visible = false;
-        video.play();
+        videoElement.play();
     }
 });
 playButton.visible = false;
@@ -31,7 +31,7 @@ playButton.translation = [0.025, 0.275, -4.2];
 playButton.scale = [5.0, 5.0, 5.0];
 scene.addNode(playButton);
 
-/// ============================================================================
+/// buttons
 
 let fileInput = document.createElement('input');
 fileInput.type = 'file';
@@ -53,8 +53,6 @@ const fileButton = new ButtonNode(fileButtonTexture, () => {
 fileButton.scale = [5, 5, 5];
 fileButton.translation = [-1.5, -1.2, -4.2];
 scene.addNode(fileButton);
-
-/// ============================================================================
 
 let upDownButtonTexture = new UrlTexture('media/textures/TB.png');
 const upDownButton = new ButtonNode(upDownButtonTexture, () => {
@@ -80,7 +78,7 @@ MonoButton.scale = [5, 5, 5];
 MonoButton.translation = [1.5, -1.2, -4.2];
 scene.addNode(MonoButton);
 
-/// ============================================================================
+/// player
 
 let videoElement = null;
 let videoNode = null;
@@ -216,7 +214,7 @@ function onEndSession(session) {
 function onSessionEnded(event) {
     if (event.session.isImmersive) {
         xrButton.setSession(null);
-        video.pause();
+        videoElement.pause();
     }
 }
 
