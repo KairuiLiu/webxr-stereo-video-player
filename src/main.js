@@ -1,10 +1,10 @@
-import { WebXRButton } from './web-xr/util/webxr-button.js';
-import { Scene } from './web-xr/render/scenes/scene.js';
-import { Renderer, createWebGLContext } from './web-xr/render/core/renderer.js';
-import { UrlTexture } from './web-xr/render/core/texture.js';
-import { ButtonNode } from './web-xr/render/nodes/button.js';
-import { VideoNode } from './web-xr/render/nodes/video.js';
-import { InlineViewerHelper } from './web-xr/util/inline-viewer-helper.js';
+import { WebXRButton } from './immersive-web-webxr-samples-toolkits/util/webxr-button.js';
+import { Scene } from './immersive-web-webxr-samples-toolkits/render/scenes/scene.js';
+import { Renderer, createWebGLContext } from './immersive-web-webxr-samples-toolkits/render/core/renderer.js';
+import { UrlTexture } from './immersive-web-webxr-samples-toolkits/render/core/texture.js';
+import { ButtonNode } from './immersive-web-webxr-samples-toolkits/render/nodes/button.js';
+import { VideoNode } from './immersive-web-webxr-samples-toolkits/render/nodes/video.js';
+import { InlineViewerHelper } from './immersive-web-webxr-samples-toolkits/util/inline-viewer-helper.js';
 
 // XR globals.
 let xrButton = null;
